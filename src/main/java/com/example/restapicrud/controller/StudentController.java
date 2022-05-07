@@ -16,8 +16,8 @@ public class StudentController {
     @GetMapping("/students")
     public List<Student> getStudents(){
         return studentService.getStudents();
-
     }
+
     @PostMapping("/students")
     public Student saveStudent(@RequestBody Student student) {
         return studentService.saveStudent(student);
@@ -32,7 +32,6 @@ public class StudentController {
     public String deleteStudentsById(@PathVariable Long id){
         return studentService.deleteStudentsById(id);
     }
-
 
     @PostMapping ("/update/students")
     public Student updateStudentsById(@RequestBody  Student student){
