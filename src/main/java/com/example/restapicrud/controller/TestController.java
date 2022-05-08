@@ -36,7 +36,7 @@ public String uploadDir = System.getProperty("user.dir") + "/src/main/resources/
         String fileData = file.getOriginalFilename();
         Path filenameAndPath = Paths.get(uploadDir,fileData);
         Files.write(filenameAndPath, fileData.getBytes());
-        System.out.println(filenameAndPath);
+        System.out.println(fileData);
         return  ResponseEntity.ok("working");
     }
 
