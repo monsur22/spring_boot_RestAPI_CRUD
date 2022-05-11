@@ -10,14 +10,8 @@ public class EmailController {
     @Autowired
     EmailService emailService;
     @PostMapping("/sendEmail")
-    public String sendMail(@RequestParam EmailDetails details){
-//        String status = emailService.sendSimpleMail(details);
-//        return status;
-        return "Email sent successfully";
-    }
-    @PostMapping("/sendEmails")
-    public String sendMails(@RequestBody EmailDetails details){
-    return emailService.sendSimpleMail(details);
+    public String sendMail(@RequestBody EmailDetails details){
+        return emailService.sendSimpleMail(details);
 //        return "Email sent successfully";
     }
 
