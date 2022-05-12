@@ -1,6 +1,8 @@
 package com.example.restapicrud.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Builder;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -20,6 +22,9 @@ public class User {
     private String email;
     private String password;
     private String verificationcode;
+    @Column(nullable = false)
+    @ColumnDefault("false")
+    private Boolean isActive=false;
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Date createdAt;
@@ -59,6 +64,14 @@ public class User {
         this.password = password;
     }
 
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
     public String getVerificationcode() {
         return verificationcode;
     }
@@ -91,6 +104,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", verificationcode='" + verificationcode + '\'' +
+                ", isActive=" + isActive +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';
