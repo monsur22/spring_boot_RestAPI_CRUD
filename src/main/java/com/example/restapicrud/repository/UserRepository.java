@@ -9,8 +9,9 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,Long>{
-    List<User> findByEmail(String email);
+
 //    @Query("SELECT u  FROM User u WHERE u.verificationcode = ?1")
 //    User findByVerificationCode( String verificationcode);
     Optional<User> findUserByVerificationcode(String code);
+    Optional<User> findUserByEmail(String email);
 }

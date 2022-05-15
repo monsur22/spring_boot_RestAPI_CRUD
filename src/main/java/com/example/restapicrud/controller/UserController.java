@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpResponse;
 import java.util.Optional;
 
 @RestController
@@ -23,21 +22,12 @@ public class UserController {
     UserRepository userRepository;
     @Autowired
     ConfirmationTokenRepository confirmationTokenRepository;
+
     @PostMapping("/user/registration")
-    public String registrationUser(@RequestBody  User user){
-         return userService.registrationUser(user);
+    public String registrationUser(@RequestBody User user) {
+        return userService.registrationUser(user);
     }
 
-//    @GetMapping("/email-verify")
-//    @RequestMapping(value="/email-verify", method= {RequestMethod.GET, RequestMethod.POST})
-//    public String emailVerify(@RequestParam("code") String code){
-////        return userService.emailVerify(code);
-//        if (userService.emailVerify(code)) {
-//            return "verify_success";
-//        } else {
-//            return "verify_fail";
-//        }
-//    }
     @GetMapping("/verify/{code}")
     public String verifyUser(@PathVariable String code) {
         if (userService.emailVerify(code)) {
@@ -46,29 +36,30 @@ public class UserController {
             return "verify_fail";
         }
     }
-    @GetMapping("/verify/email")
-    @ResponseBody
-    public String verifyEmail(String code) {
-        return userService.verifyEmail(code).getBody();
-    }
+
+
     @PostMapping("/confirm-code/{token}")
-    public ResponseEntity<String> confirmUserAccount(@PathVariable String token)
-    {
+    public ResponseEntity<String> confirmUserAccount(@PathVariable String token) {
 
         Optional<ConfirmationToken> confirmToken = userService.getConfirmationToken(token);
 
-        if(confirmToken.isPresent())
-        {
+        if (confirmToken.isPresent()) {
             User user = confirmToken.get().getUser();
             user.setActive(true);
             userRepository.save(user);
-            return  new ResponseEntity<>("Verified done", HttpStatus.OK);
+            return new ResponseEntity<>("Verified done", HttpStatus.OK);
 
         }
         return new ResponseEntity<>("Not Found", HttpStatus.NOT_FOUND);
     }
+
+    @PostMapping("/user/login")
+    public String login(@RequestBody User user){
+        return userService.userLogin(user);
+    }
+
     @GetMapping("/encode")
-    public void encoder(){
+    public void encoder() {
         String rawpass = "pass";
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodePass = passwordEncoder.encode(rawpass);
@@ -80,6 +71,4 @@ public class UserController {
         System.out.println(randomCode);
 
     }
-
-
 }

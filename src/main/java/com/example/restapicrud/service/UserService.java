@@ -13,7 +13,8 @@ public interface UserService {
 
     boolean emailVerify(String code);
 
-    ResponseEntity<String> verifyEmail(String token);
-
     Optional<ConfirmationToken> getConfirmationToken(String token);
+
+    String userLogin(User user);
+
 }
